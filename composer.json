@@ -1,0 +1,24 @@
+{
+    "name": "upchuk/wunderlist",
+    "description": "Wunderlist API Testing",
+    "authors": [
+        {
+            "name": "upchuk",
+            "email": "danny@webomelette.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "guzzlehttp/guzzle": "~6.0",
+        "twig/twig": "~1.18"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "Wunderlist\\": "src/"
+        }
+  },
+    "require-dev": {
+        "symfony/var-dumper": "~2.7"
+    }
+}
