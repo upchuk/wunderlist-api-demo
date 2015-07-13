@@ -1,7 +1,7 @@
 To use this demo code:
 
 * Run `composer install` to install all the dependencies
-* Create a file called `kyes.php` in the root folder and add the following variables:
+* Create a file called `keys.php` in the root folder and add the following variables:
 
     ```
     $client_id = 'your Wunderlist app client id';
