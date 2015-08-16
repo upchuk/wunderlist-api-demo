@@ -15,20 +15,10 @@ class WunderlistClient {
     /**
      * Constructor
      *
-     * @param $client_id
-     * @param $token
+     * @param Client $guzzle
      */
-    public function __construct($client_id, $token) {
-        $this->guzzle = new Client(
-            [
-                'base_uri' => 'https://a.wunderlist.com/api/v1/',
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'X-Client-ID' => $client_id,
-                    'X-Access-Token' => $token,
-                ]
-            ]
-        );
+    public function __construct(Client $guzzle) {
+        $this->guzzle = $guzzle;
     }
 
     /**

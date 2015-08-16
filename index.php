@@ -3,12 +3,23 @@
 require 'vendor/autoload.php';
 require_once 'keys.php';
 
+use GuzzleHttp\Client;
 use Wunderlist\WunderlistClient as Wunderlist;
 
 $loader = new Twig_Loader_Filesystem(__DIR__ . '/templates');
 $twig = new Twig_Environment($loader);
 
-$wunderlist = new Wunderlist($client_id, $access_token);
+$guzzle = new Client(
+    [
+        'base_uri' => 'https://a.wunderlist.com/api/v1/',
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'X-Client-ID' => $client_id,
+            'X-Access-Token' => $access_token,
+        ]
+    ]
+);
+$wunderlist = new Wunderlist($guzzle);
 
 $tasks = $wunderlist->getListTasks($list_id);
 
