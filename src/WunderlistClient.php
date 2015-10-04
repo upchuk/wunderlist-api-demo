@@ -45,7 +45,7 @@ class WunderlistClient {
      */
     public function getList($id) {
         if (!is_numeric($id)) {
-            return NULL;
+            throw new \InvalidArgumentException('Incorrect ID specified.');
         }
 
         try {
@@ -83,10 +83,15 @@ class WunderlistClient {
     /**
      * Creates a new task
      *
-     * @param $task
+     * @param string $name
+     * @param string $list_id
+     * @param array $task
+     *
      * @return mixed
      */
-    public function createTask($task) {
+    public function createTask($name, $list_id, $task = []) {
+        $task['name'] = $name;
+        $task['list_id'] = $list_id;
         try {
             $response = $this->guzzle->post('tasks', ['body' => json_encode($task)]);
         }
