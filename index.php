@@ -21,6 +21,11 @@ $guzzle = new Client(
 );
 $wunderlist = new Wunderlist($guzzle);
 
-$tasks = $wunderlist->getListTasks($list_id);
+try {
+    $tasks = $wunderlist->getListTasks($list_id);
+    echo $twig->render('list.html.twig', array('tasks' => $tasks));
+}
+catch (\Exception $e) {
+    echo 'An error occurred';
+}
 
-echo $twig->render('list.html.twig', array('tasks' => $tasks));
