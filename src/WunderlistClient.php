@@ -2,23 +2,23 @@
 
 namespace Wunderlist;
 
-use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use Psr\Http\Message\ResponseInterface;
 
 class WunderlistClient {
 
     /**
-     * @var Client
+     * @var ClientInterface
      */
-    private $guzzle;
+    private $client;
 
     /**
      * Constructor
      *
-     * @param Client $guzzle
+     * @param ClientInterface $client
      */
-    public function __construct(Client $guzzle) {
-        $this->guzzle = $guzzle;
+    public function __construct(ClientInterface $client) {
+        $this->client = $client;
     }
 
     /**
@@ -44,7 +44,7 @@ class WunderlistClient {
      * @return array
      */
     public function getLists() {
-        $response = $this->guzzle->get('lists');
+        $response = $this->client->get('lists');
         $this->checkResponseStatusCode($response, 200);
         return json_decode($response->getBody(), true);
     }
@@ -61,7 +61,7 @@ class WunderlistClient {
             throw new \InvalidArgumentException('The list id must be numeric.');
         }
 
-        $response = $this->guzzle->get('lists/' . $id);
+        $response = $this->client->get('lists/' . $id);
         $this->checkResponseStatusCode($response, 200);
         return json_decode($response->getBody(), true);
     }
@@ -78,7 +78,7 @@ class WunderlistClient {
             throw new \InvalidArgumentException('The list id must be numeric.');
         }
 
-        $response = $this->guzzle->get('tasks', ['query' => ['list_id' => $list_id]]);
+        $response = $this->client->get('tasks', ['query' => ['list_id' => $list_id]]);
         $this->checkResponseStatusCode($response, 200);
         return json_decode($response->getBody());
     }
@@ -98,7 +98,7 @@ class WunderlistClient {
         }
         $task['name'] = $name;
         $task['list_id'] = $list_id;
-        $response = $this->guzzle->post('tasks', ['body' => json_encode($task)]);
+        $response = $this->client->post('tasks', ['body' => json_encode($task)]);
         $this->checkResponseStatusCode($response, 201);
         return json_decode($response->getBody());
     }
@@ -117,7 +117,7 @@ class WunderlistClient {
             throw new \InvalidArgumentException('The revision must be numeric.');
         }
 
-        $response = $this->guzzle->patch('tasks/' . $task_id, ['body' => json_encode(['revision' => (int) $revision, 'completed' => true])]);
+        $response = $this->client->patch('tasks/' . $task_id, ['body' => json_encode(['revision' => (int) $revision, 'completed' => true])]);
         $this->checkResponseStatusCode($response, 200);
         return json_decode($response->getBody());
     }
